@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Invitation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #001a4d 0%, #0d3b8a 50%, #1e5ab8 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .invitation {
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 25px 70px rgba(0, 26, 77, 0.5);
+            max-width: 650px;
+            padding: 70px 50px;
+            text-align: center;
+            animation: slideIn 0.8s ease-out;
+            border: 2px solid #e0eeff;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .balloons {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 40px;
+            height: 100px;
+        }
+
+        .balloon {
+            width: 50px;
+            height: 60px;
+            border-radius: 50% 50% 50% 0;
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+            filter: drop-shadow(0 4px 8px rgba(0, 26, 77, 0.15));
+        }
+
+        .balloon:nth-child(1) {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            animation-delay: 0s;
+        }
+
+        .balloon:nth-child(2) {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            animation-delay: 0.2s;
+        }
+
+        .balloon:nth-child(3) {
+            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+            animation-delay: 0.4s;
+        }
+
+        .balloon:nth-child(4) {
+            background: linear-gradient(135deg, #93c5fd 0%, #60a5fa 100%);
+            animation-delay: 0.6s;
+        }
+
+        .balloon::after {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 30px;
+            background: #999;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-30px);
+            }
+        }
+
+        h1 {
+            color: #0d3b8a;
+            font-size: 56px;
+            margin-bottom: 10px;
+            animation: fadeInDown 0.8s ease-out;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            color: #1e5ab8;
+            font-size: 26px;
+            margin-bottom: 50px;
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        .details {
+            background: linear-gradient(135deg, #f0f4ff 0%, #e8eeff 100%);
+            border-left: 6px solid #2563eb;
+            padding: 40px;
+            margin: 40px 0;
+            border-radius: 15px;
+            text-align: left;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.08);
+        }
+
+        .detail-item {
+            margin: 20px 0;
+            font-size: 18px;
+            color: #001a4d;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .detail-label {
+            font-weight: 700;
+            color: #0d3b8a;
+            min-width: 120px;
+        }
+
+        .detail-value {
+            color: #1e5ab8;
+            font-weight: 600;
+        }
+
+        .message {
+            color: #444;
+            font-size: 18px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 12px 35px rgba(37, 99, 235, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 45px rgba(37, 99, 235, 0.6);
+            background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+        }
+
+        .cta-button:active {
+            transform: translateY(-1px);
+        }
+
+        .secondary-button {
+            background: transparent;
+            color: #2563eb;
+            border: 2px solid #2563eb;
+            padding: 15px 45px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-left: 15px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .secondary-button:hover {
+            background: #2563eb;
+            color: white;
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #2563eb;
+            pointer-events: none;
+            border-radius: 50%;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .footer {
+            margin-top: 40px;
+            color: #999;
+            font-size: 14px;
+            border-top: 1px solid #e0eeff;
+            padding-top: 20px;
+        }
+
+        .copy-button {
+            background: #f0f4ff;
+            border: none;
+            color: #2563eb;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-left: 10px;
+        }
+
+        .copy-button:hover {
+            background: #2563eb;
+            color: white;
+        }
+
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #2563eb, transparent);
+            margin: 30px 0;
+        }
+
+        .rsvp-section {
+            margin-top: 50px;
+            padding-top: 40px;
+            border-top: 3px solid #e0eeff;
+        }
+
+        .rsvp-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .rsvp-header h2 {
+            color: #0d3b8a;
+            font-size: 32px;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .rsvp-header p {
+            color: #666;
+            font-size: 16px;
+            font-style: italic;
+        }
+
+        .rsvp-form {
+            background: linear-gradient(135deg, #f0f4ff 0%, #e8eeff 100%);
+            padding: 40px;
+            border-radius: 20px;
+            margin: 40px 0;
+            border: 2px solid #d0deff;
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            color: #0d3b8a;
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #d0deff;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+            background: white;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            color: white;
+            border: none;
+            padding: 14px 50px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(37, 99, 235, 0.4);
+        }
+
+        .attendees-section {
+            margin-top: 50px;
+        }
+
+        .attendees-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .attendees-header h2 {
+            color: #0d3b8a;
+            font-size: 32px;
+            margin-bottom: 30px;
+            font-weight: 800;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #f0f4ff 0%, #e8eeff 100%);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.15);
+            border: 2px solid #d0deff;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(37, 99, 235, 0.25);
+        }
+
+        .stat-number {
+            font-size: 40px;
+            font-weight: 900;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #666;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            padding: 12px 30px;
+            border: 2px solid #d0deff;
+            background: white;
+            color: #0d3b8a;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .tab-button.active {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            color: white;
+            border-color: #2563eb;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .tab-button:hover:not(.active) {
+            border-color: #2563eb;
+            background: #f0f4ff;
+        }
+
+        .attendees-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 18px;
+        }
+
+        .attendee-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.15);
+            border-top: 4px solid #2563eb;
+            transition: all 0.3s ease;
+        }
+
+        .attendee-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(37, 99, 235, 0.25);
+        }
+
+        .attendee-card.coming {
+            border-top-color: #10b981;
+        }
+
+        .attendee-card.not-coming {
+            border-top-color: #ef4444;
+            opacity: 0.75;
+        }
+
+        .attendee-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .attendee-name {
+            font-weight: 800;
+            color: #0d3b8a;
+            margin-bottom: 10px;
+            font-size: 16px;
+            word-break: break-word;
+        }
+
+        .attendee-status {
+            font-size: 13px;
+            font-weight: 700;
+            padding: 8px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .attendee-status.coming {
+            background: #d1fae5;
+            color: #047857;
+        }
+
+        .attendee-status.not-coming {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #999;
+            padding: 60px 20px;
+            font-size: 16px;
+        }
+
+        .empty-state-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .attendees-list {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            .rsvp-form {
+                padding: 25px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .attendees-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="invitation">
+        <div class="balloons">
+            <div class="balloon"></div>
+            <div class="balloon"></div>
+            <div class="balloon"></div>
+            <div class="balloon"></div>
+        </div>
+
+        <h1>🎉 You're Invited! 🎉</h1>
+        <p class="subtitle">Join us for an unforgettable celebration!</p>
+
+        <div class="details">
+            <div class="detail-item">
+                <span class="detail-label">👤 Birthday Star:</span>
+                <span class="detail-value">Ponnam Sree Varun</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">📅 Date:</span>
+                <span class="detail-value">Tuesday, January 21st, 2026</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">🕐 Time:</span>
+                <span class="detail-value">7:00 PM - 8:00 PM</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">📍 Location:</span>
+                <span class="detail-value">Capital Hotel</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">📞 Contact:</span>
+                <span class="detail-value">8977918559 <button class="copy-button" onclick="copyPhone()">Copy</button></span>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <p class="message">
+            Get ready for an evening filled with joy, celebration, and wonderful memories! We can't wait to celebrate with you. ✨
+        </p>
+
+        <div class="button-group">
+            <button class="cta-button" onclick="scrollToRSVP()">Yes, I'll Be There! ✓</button>
+            <button class="secondary-button" onclick="contactHost()">Get Directions</button>
+        </div>
+
+        <!-- RSVP Section -->
+        <div class="rsvp-section">
+            <div class="rsvp-header">
+                <h2>✉️ RSVP - Please Confirm Your Attendance</h2>
+                <p>Let us know if you can join the celebration!</p>
+            </div>
+            
+            <div class="rsvp-form">
+                <form id="rsvpForm" onsubmit="handleRSVP(event)">
+                    <div class="form-group">
+                        <label for="name">Your Full Name *</label>
+                        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Will You Attend? *</label>
+                        <select id="status" name="status" required>
+                            <option value="">-- Please Select --</option>
+                            <option value="coming">🎉 Yes, I'll Be There!</option>
+                            <option value="not-coming">😢 Sorry, Can't Make It</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="submit-btn">Submit RSVP</button>
+                </form>
+            </div>
+
+            <!-- Attendees List -->
+            <div class="attendees-section">
+                <div class="attendees-header">
+                    <h2>👥 Guest List</h2>
+                </div>
+                
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="stat-number" id="totalCount" style="color: #2563eb;">0</div>
+                        <div class="stat-label">Total RSVPs</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number" id="comingCount" style="color: #10b981;">0</div>
+                        <div class="stat-label">✓ Coming</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number" id="notComingCount" style="color: #ef4444;">0</div>
+                        <div class="stat-label">✗ Can't Attend</div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <div class="tabs">
+                        <button class="tab-button active" onclick="filterAttendees('all')">All Guests</button>
+                        <button class="tab-button" onclick="filterAttendees('coming')">Coming 🎉</button>
+                        <button class="tab-button" onclick="filterAttendees('not-coming')">Can't Make It</button>
+                    </div>
+                </div>
+
+                <div class="attendees-list" id="attendeesList">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">👋</div>
+                        <p>No RSVPs yet. Be the first to confirm!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Made with 💜 | Can't wait to celebrate together!</p>
+        </div>
+    </div>
+
+    <script>
+        let currentFilter = 'all';
+
+        // Initialize RSVPs from localStorage
+        function loadRSVPs() {
+            const rsvps = JSON.parse(localStorage.getItem('birthdayRSVPs') || '[]');
+            displayAttendees(rsvps);
+        }
+
+        // Handle RSVP form submission
+        function handleRSVP(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('name').value.trim();
+            const status = document.getElementById('status').value;
+            
+            if (!name || !status) {
+                alert('Please fill in all fields!');
+                return;
+            }
+
+            // Get existing RSVPs
+            let rsvps = JSON.parse(localStorage.getItem('birthdayRSVPs') || '[]');
+            
+            // Check if person already RSVPed
+            const existingIndex = rsvps.findIndex(r => r.name.toLowerCase() === name.toLowerCase());
+            
+            if (existingIndex !== -1) {
+                // Update existing RSVP
+                rsvps[existingIndex].status = status;
+                rsvps[existingIndex].timestamp = new Date().toISOString();
+                alert('✓ Your RSVP has been updated!');
+            } else {
+                // Add new RSVP
+                rsvps.push({
+                    name: name,
+                    status: status,
+                    timestamp: new Date().toISOString()
+                });
+                alert('🎉 Thank you for your RSVP!');
+            }
+
+            // Save to localStorage
+            localStorage.setItem('birthdayRSVPs', JSON.stringify(rsvps));
+            
+            // Clear form and reload list
+            document.getElementById('rsvpForm').reset();
+            displayAttendees(rsvps);
+            currentFilter = 'all';
+            updateTabButtons('all');
+
+            // Trigger confetti
+            for (let i = 0; i < 30; i++) {
+                setTimeout(createConfetti, i * 20);
+            }
+        }
+
+        // Filter attendees
+        function filterAttendees(filter) {
+            currentFilter = filter;
+            updateTabButtons(filter);
+            const rsvps = JSON.parse(localStorage.getItem('birthdayRSVPs') || '[]');
+            displayAttendees(rsvps);
+        }
+
+        // Update tab button styles
+        function updateTabButtons(activeFilter) {
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target?.classList.add('active');
+            
+            // Find and activate the correct button
+            document.querySelectorAll('.tab-button').forEach((btn, idx) => {
+                if ((idx === 0 && activeFilter === 'all') ||
+                    (idx === 1 && activeFilter === 'coming') ||
+                    (idx === 2 && activeFilter === 'not-coming')) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        // Display attendees list
+        function displayAttendees(rsvps) {
+            const list = document.getElementById('attendeesList');
+            const coming = rsvps.filter(r => r.status === 'coming');
+            const notComing = rsvps.filter(r => r.status === 'not-coming');
+
+            // Update stats
+            document.getElementById('totalCount').textContent = rsvps.length;
+            document.getElementById('comingCount').textContent = coming.length;
+            document.getElementById('notComingCount').textContent = notComing.length;
+
+            // Filter based on current selection
+            let filtered = rsvps;
+            if (currentFilter === 'coming') {
+                filtered = coming;
+            } else if (currentFilter === 'not-coming') {
+                filtered = notComing;
+            }
+
+            // Sort by status (coming first, then alphabetically)
+            const sorted = filtered.sort((a, b) => {
+                if (a.status === 'coming' && b.status !== 'coming') return -1;
+                if (a.status !== 'coming' && b.status === 'coming') return 1;
+                return a.name.localeCompare(b.name);
+            });
+
+            if (sorted.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1 / -1;">
+                        <div class="empty-state-icon">
+                            ${currentFilter === 'coming' ? '🎉' : currentFilter === 'not-coming' ? '😢' : '👋'}
+                        </div>
+                        <p>${currentFilter === 'coming' ? 'No one confirmed yet!' : currentFilter === 'not-coming' ? 'Everyone is coming!' : 'No RSVPs yet. Be the first to confirm!'}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            list.innerHTML = sorted.map(attendee => `
+                <div class="attendee-card ${attendee.status}">
+                    <div class="attendee-icon">${attendee.status === 'coming' ? '✅' : '❌'}</div>
+                    <div class="attendee-name">${attendee.name}</div>
+                    <div class="attendee-status ${attendee.status}">
+                        ${attendee.status === 'coming' ? '✓ Coming' : '✗ Can\'t Attend'}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Scroll to RSVP section
+        function scrollToRSVP() {
+            const rsvpSection = document.querySelector('.rsvp-section');
+            rsvpSection.scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => {
+                document.getElementById('name').focus();
+            }, 500);
+        }
+
+        // Copy phone number to clipboard
+        function copyPhone() {
+            const phone = '8977918559';
+            navigator.clipboard.writeText(phone).then(() => {
+                alert('Phone number copied! 📋');
+            });
+        }
+
+        // Get directions (opens Google Maps)
+        function contactHost() {
+            window.open('https://www.google.com/maps/place/The+Capital+Hotel/@16.3147153,80.4153158,17z/data=!3m1!4b1!4m9!3m8!1s0x3a4a75aab14e3e53:0xc9c9f0fb0b09cb04!5m2!4m1!1i2!8m2!3d16.3147102!4d80.4178961!16s%2Fg%2F11x8cwnv2p?entry=ttu&g_ep=EgoyMDI2MDEwNy4wIKXMDSoASAFQAw%3D%3D', '_blank');
+        }
+
+        // Create confetti effect
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.classList.add('confetti');
+            confetti.style.left = Math.random() * window.innerWidth + 'px';
+            confetti.style.top = '-10px';
+            confetti.style.background = ['#2563eb', '#1e40af', '#3b82f6', '#60a5fa', '#93c5fd'][Math.floor(Math.random() * 5)];
+            document.body.appendChild(confetti);
+
+            let top = 0;
+            const speed = Math.random() * 3 + 2;
+            const left = parseFloat(confetti.style.left);
+            const drift = (Math.random() - 0.5) * 2;
+
+            const animate = () => {
+                top += speed;
+                confetti.style.top = top + 'px';
+                confetti.style.left = left + drift * top / 10 + 'px';
+                confetti.style.opacity = 1 - top / window.innerHeight;
+
+                if (top < window.innerHeight) {
+                    requestAnimationFrame(animate);
+                } else {
+                    confetti.remove();
+                }
+            };
+            animate();
+        }
+
+        // Load RSVPs on page load
+        window.addEventListener('load', () => {
+            loadRSVPs();
+            for (let i = 0; i < 60; i++) {
+                setTimeout(createConfetti, i * 30);
+            }
+        });
+
+        // Add confetti on button clicks
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('cta-button') || e.target.classList.contains('secondary-button')) {
+                for (let i = 0; i < 40; i++) {
+                    setTimeout(createConfetti, i * 20);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
