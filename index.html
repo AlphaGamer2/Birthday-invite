@@ -3,207 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Casual Meetup Invitation</title>
+    <title>Meetup Invitation - Guntur</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #001a4d 0%, #0d3b8a 50%, #1e5ab8 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .invitation {
-            background: white;
-            border-radius: 25px;
-            box-shadow: 0 25px 70px rgba(0, 26, 77, 0.5);
-            max-width: 650px;
-            padding: 70px 50px;
-            text-align: center;
-            animation: slideIn 0.8s ease-out;
-            border: 2px solid #e0eeff;
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        h1 { color: #0d3b8a; font-size: 48px; margin-bottom: 10px; font-weight: 800; }
-        .subtitle { color: #1e5ab8; font-size: 24px; margin-bottom: 50px; font-style: italic; }
-
-        .details {
-            background: linear-gradient(135deg, #f0f4ff 0%, #e8eeff 100%);
-            border-left: 6px solid #2563eb;
-            padding: 30px;
-            margin: 40px 0;
-            border-radius: 15px;
-            text-align: left;
-        }
-
-        .detail-item { margin: 15px 0; font-size: 18px; color: #001a4d; display: flex; gap: 15px; }
-        .detail-label { font-weight: 700; color: #0d3b8a; min-width: 120px; }
-
-        .cta-button {
-            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
-            color: white; border: none; padding: 18px 50px; font-size: 18px;
-            font-weight: 700; border-radius: 50px; cursor: pointer;
-            box-shadow: 0 12px 35px rgba(37, 99, 235, 0.4);
-        }
-
-        /* RSVP Form Styling */
-        .rsvp-section { margin-top: 50px; padding-top: 40px; border-top: 3px solid #e0eeff; }
-        .rsvp-form { background: #f8faff; padding: 30px; border-radius: 20px; border: 1px solid #d0deff; margin: 30px 0; }
-        .form-group { margin-bottom: 20px; text-align: left; }
-        .form-group label { display: block; font-weight: 700; margin-bottom: 8px; color: #0d3b8a; }
-        .form-group input, .form-group select { width: 100%; padding: 12px; border: 2px solid #d0deff; border-radius: 10px; }
-
-        /* Guest List Styling */
-        .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 30px; }
-        .stat-box { background: #f0f4ff; padding: 15px; border-radius: 10px; border: 1px solid #d0deff; }
-        .stat-number { font-size: 24px; font-weight: 900; }
-        .stat-label { font-size: 11px; color: #666; text-transform: uppercase; }
-
-        .tabs { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; }
-        .tab-button { padding: 8px 20px; border: 1px solid #d0deff; background: white; border-radius: 20px; cursor: pointer; }
-        .tab-button.active { background: #2563eb; color: white; border-color: #2563eb; }
-
-        .attendees-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; }
-        .attendee-card { padding: 15px; border-radius: 12px; background: white; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 4px solid #ccc; }
+        /* [Keeping your previous styles for consistency] */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: #001a4d; display: flex; justify-content: center; padding: 20px; }
+        .invitation { background: white; border-radius: 25px; max-width: 600px; padding: 40px; text-align: center; width: 100%; }
+        .details { background: #f0f4ff; border-left: 6px solid #2563eb; padding: 20px; margin: 20px 0; text-align: left; border-radius: 10px; }
+        .rsvp-form { background: #f8faff; padding: 25px; border-radius: 20px; border: 1px solid #d0deff; margin-bottom: 30px; }
+        .form-group { margin-bottom: 15px; text-align: left; }
+        .form-group label { display: block; font-weight: 700; margin-bottom: 5px; color: #0d3b8a; }
+        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #d0deff; border-radius: 8px; }
+        .cta-button { background: #2563eb; color: white; border: none; padding: 15px 30px; font-weight: 700; border-radius: 50px; cursor: pointer; width: 100%; }
+        .attendee-card { padding: 15px; border-radius: 12px; background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 10px; border-top: 4px solid #ccc; text-align: left; }
         .attendee-card.coming { border-top-color: #10b981; }
-        .attendee-card.not-coming { border-top-color: #ef4444; opacity: 0.8; }
-        .attendee-name { font-weight: 700; color: #0d3b8a; margin-bottom: 5px; font-size: 14px; }
-        .attendee-status { font-size: 11px; font-weight: 700; text-transform: uppercase; }
-
-        .copy-button { background: #f0f4ff; border: none; color: #2563eb; padding: 4px 10px; border-radius: 10px; cursor: pointer; font-size: 12px; }
+        .loc-tag { font-size: 10px; color: #666; background: #eee; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-top: 5px; }
     </style>
 </head>
 <body>
     <div class="invitation">
-        <h1>👋 Casual Meetup!</h1>
-        <p class="subtitle">Guntur | Jan 21st</p>
-
+        <h1>👋 Meetup in Guntur</h1>
         <div class="details">
-            <div class="detail-item"><span class="detail-label">📅 Date:</span><span>Jan 21, 2026</span></div>
-            <div class="detail-item"><span class="detail-label">📍 Location:</span><span>Guntur</span></div>
-            <div class="detail-item"><span class="detail-label">📞 Contact:</span><span>8977918559 <button class="copy-button" onclick="copyPhone()">Copy</button></span></div>
+            <p><strong>📅 Date:</strong> Jan 21, 2026</p>
+            <p><strong>📍 Location:</strong> Guntur</p>
         </div>
 
-        <button class="cta-button" onclick="scrollToRSVP()">Are you coming? ✓</button>
-
-        <div class="rsvp-section" id="rsvp-area">
-            <h2>✉️ RSVP Here</h2>
-            <div class="rsvp-form">
-                <form id="rsvpForm" onsubmit="handleRSVP(event)">
-                    <div class="form-group">
-                        <label>Your Name</label>
-                        <input type="text" id="name" required placeholder="Enter name">
-                    </div>
-                    <div class="form-group">
-                        <label>Will you join?</label>
-                        <select id="status" required>
-                            <option value="coming">✅ Yes, I'm coming!</option>
-                            <option value="not-coming">❌ Sorry, can't make it</option>
-                        </select>
-                    </div>
-                    <button type="submit" style="width:100%;" class="cta-button">Submit Response</button>
-                </form>
-            </div>
-
-            <div class="attendees-section">
-                <h2 style="margin-bottom:20px;">👥 Guest List</h2>
-                
-                <div class="stats">
-                    <div class="stat-box"><div class="stat-number" id="totalCount">0</div><div class="stat-label">RSVPs</div></div>
-                    <div class="stat-box"><div class="stat-number" id="comingCount" style="color:#10b981;">0</div><div class="stat-label">Coming</div></div>
-                    <div class="stat-box"><div class="stat-number" id="notComingCount" style="color:#ef4444;">0</div><div class="stat-label">No</div></div>
+        <div class="rsvp-form">
+            <h3>RSVP & Share Location</h3>
+            <form id="rsvpForm" onsubmit="handleRSVP(event)">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" id="name" required placeholder="Who are you?">
                 </div>
-
-                <div class="tabs">
-                    <button class="tab-button active" onclick="filterList('all', this)">All</button>
-                    <button class="tab-button" onclick="filterList('coming', this)">Coming</button>
-                    <button class="tab-button" onclick="filterList('not-coming', this)">Not Coming</button>
+                <div class="form-group">
+                    <label>Joining?</label>
+                    <select id="status">
+                        <option value="coming">Yes, I'm coming!</option>
+                        <option value="not-coming">No, I can't</option>
+                    </select>
                 </div>
-
-                <div class="attendees-list" id="attendeesList">
-                    <p style="grid-column: 1/-1; color:#999;">Loading guest list...</p>
+                <div class="form-group">
+                    <label>Note (Optional)</label>
+                    <textarea id="note" rows="2" placeholder="e.g. Bringing snacks!"></textarea>
                 </div>
-            </div>
+                <button type="submit" class="cta-button" id="submitBtn">Submit & Send Location</button>
+            </form>
         </div>
+
+        <div id="attendeesList">
+            </div>
     </div>
 
     <script>
-        const SHEETDB_API = 'https://sheetdb.io/api/v1/raj5uy3ex9q9l';
-        let allGuests = [];
+        const API_URL = 'https://sheetdb.io/api/v1/raj5uy3ex9q9l';
 
-        function handleRSVP(event) {
+        async function handleRSVP(event) {
             event.preventDefault();
-            const name = document.getElementById('name').value;
-            const status = document.getElementById('status').value;
+            const btn = document.getElementById('submitBtn');
+            btn.innerText = "Capturing Location...";
+            btn.disabled = true;
 
-            fetch(SHEETDB_API, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ data: [{ Name: name, Status: status, Timestamp: new Date().toLocaleString() }] })
-            }).then(() => {
-                alert('RSVP Submitted!');
-                document.getElementById('rsvpForm').reset();
-                loadGuests();
-            });
+            // 1. Get Location
+            navigator.geolocation.getCurrentPosition(
+                async (position) => {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    const mapUrl = `https://www.google.com/maps?q=${lat},${lon}`;
+                    await sendData(lat, lon, mapUrl);
+                },
+                async (error) => {
+                    console.warn("Location denied, sending without it.");
+                    await sendData("Denied", "Denied", "N/A");
+                }
+            );
         }
 
-        function loadGuests() {
-            fetch(SHEETDB_API)
-                .then(res => res.json())
-                .then(data => {
-                    allGuests = data;
-                    renderList('all');
+        async function sendData(lat, lon, mapUrl) {
+            const data = {
+                Name: document.getElementById('name').value,
+                Status: document.getElementById('status').value,
+                Note: document.getElementById('note').value,
+                Latitude: lat,
+                Longitude: lon,
+                GoogleMaps: mapUrl,
+                Time: new Date().toLocaleString()
+            };
+
+            try {
+                await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ data: [data] })
                 });
+                alert("RSVP Recorded!");
+                location.reload(); 
+            } catch (err) {
+                alert("Error saving data.");
+            }
         }
 
-        function renderList(filter) {
+        // Load guest list on start
+        fetch(API_URL).then(r => r.json()).then(guests => {
             const container = document.getElementById('attendeesList');
-            let filtered = allGuests;
-            
-            if(filter !== 'all') filtered = allGuests.filter(g => g.Status === filter);
-            
-            document.getElementById('totalCount').innerText = allGuests.length;
-            document.getElementById('comingCount').innerText = allGuests.filter(g => g.Status === 'coming').length;
-            document.getElementById('notComingCount').innerText = allGuests.filter(g => g.Status === 'not-coming').length;
-
-            if(filtered.length === 0) {
-                container.innerHTML = '<p style="grid-column: 1/-1; color:#999;">No guests to show.</p>';
-                return;
-            }
-
-            container.innerHTML = filtered.map(g => `
+            container.innerHTML = "<h3>Guest List</h3>" + guests.map(g => `
                 <div class="attendee-card ${g.Status}">
-                    <div class="attendee-name">${g.Name}</div>
-                    <div class="attendee-status" style="color:${g.Status === 'coming' ? '#10b981' : '#ef4444'}">
-                        ${g.Status === 'coming' ? '✓ Attending' : '✗ Unavailable'}
-                    </div>
+                    <strong>${g.Name}</strong> - ${g.Status === 'coming' ? '✅' : '❌'}<br>
+                    <small>${g.Note || ''}</small><br>
+                    <span class="loc-tag">📍 Captured: ${g.Latitude !== 'Denied' ? 'Yes' : 'No'}</span>
                 </div>
             `).join('');
-        }
-
-        function filterList(type, btn) {
-            document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            renderList(type);
-        }
-
-        function scrollToRSVP() { document.getElementById('rsvp-area').scrollIntoView({ behavior: 'smooth' }); }
-        function copyPhone() { navigator.clipboard.writeText('8977918559').then(() => alert('Copied!')); }
-
-        window.onload = loadGuests;
+        });
     </script>
 </body>
 </html>
